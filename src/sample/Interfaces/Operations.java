@@ -8,5 +8,5 @@ import java.rmi.RemoteException;
 
 public interface Operations extends Remote {
     public Flight getFlightId(String id) throws RemoteException;
-    public void addPersontoFlight(String flightId, int x , int y , Person p);
+    public void addPersontoFlight(String flightId, int x , int y , Person p) throws RemoteException;
 }
