@@ -1,6 +1,6 @@
 package sample;
 
-import sample.Intefaces.PersonOperations;
+import sample.Interfaces.PersonOperations;
 
 import java.io.Serializable;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package sample.Intefaces;
+package sample.Interfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

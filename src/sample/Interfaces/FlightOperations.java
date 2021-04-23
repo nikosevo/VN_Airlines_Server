@@ -1,4 +1,4 @@
-package sample.Intefaces;
+package sample.Interfaces;
 
 public interface FlightOperations
 {
