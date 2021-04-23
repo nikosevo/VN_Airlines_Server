@@ -1,5 +1,8 @@
 package sample.Interfaces;
 
-public interface FlightOperations
-{
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface FlightOperations extends Remote {
+    public String getFlightId() throws RemoteException;
 }

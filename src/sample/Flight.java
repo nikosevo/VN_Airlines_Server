@@ -1,7 +1,5 @@
 package sample;
 
-import sample.Person;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,6 +7,8 @@ import java.time.LocalTime;
 import java.util.Arrays;
 
 public class Flight implements Serializable {
+
+    private static final long serialVersionUID = -1234567L;
 
     private Person seats[][] = {null}; //an double array that represents the seats of the plane
     private int seatsAvailable;

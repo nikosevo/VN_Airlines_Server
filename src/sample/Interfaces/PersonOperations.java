@@ -6,6 +6,4 @@ import java.rmi.RemoteException;
 public interface PersonOperations extends Remote
 {
     public String getName() throws RemoteException; // interface method
-
-
 }
