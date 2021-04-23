@@ -30,6 +30,11 @@ public class Flight implements Serializable {
 
     }
 
+    public void setpersonto(int x,int y,Person p)
+    {
+        this.seats[x][y]=p;
+    }
+
     @Override
     public String toString() {
 

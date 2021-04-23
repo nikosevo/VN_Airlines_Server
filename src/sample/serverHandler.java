@@ -4,28 +4,33 @@ import sample.Interfaces.Operations;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
-public class serverHandler  extends UnicastRemoteObject implements Operations
+public class serverHandler extends UnicastRemoteObject implements Operations
 {
 
-    private ArrayList<Flight> flights = new ArrayList<Flight>();
-    public serverHandler() throws RemoteException {
+    private Hashtable<String, Flight> flights = new Hashtable<String, Flight>();
+
+    public serverHandler() throws RemoteException
+    {
         super();
-        flights.add(new Flight("123","athens","to", LocalTime.parse("08:20"), LocalDate.parse("2018-12-27")));
 
     }
 
+    @Override
+    public void addPersontoFlight(String flightId, int x, int y, Person p)
+    {
+        flights.get(flightId).setpersonto(x, y, p);
+    }
 
     @Override
-    public Flight getFlightId(String id) throws RemoteException {
-        for(Flight f : flights)
-            if(f.getId().equals(id))
-                return f;
+    public Flight getFlightId(String id) throws RemoteException
+    {
 
-        return null;
+        return flights.get(id);
+
     }
 
 
