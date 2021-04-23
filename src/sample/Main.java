@@ -18,7 +18,6 @@ public class Main
             serverHandler server = new serverHandler();
             Naming.rebind("//localhost:1099/valnik", server);
             System.out.println("serber up and renning");
-            server.receiveSearchRequest("athens","chios"); //todo add date
         }catch(Exception e){
             System.out.println(e);
         }

@@ -19,35 +19,13 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     {
         super();
         deserializeFlights();
-        System.out.println(flights.get("123"));
-    }
-
-    @Override
-    public void receiveSearchRequest(String cityfrom, String cityto) throws RemoteException
-    {   //todo delete this
-        Flight fly = new Flight("13","athens","chios",LocalTime.parse("08:20"),LocalDate.parse("2007-05-05"));
-       flights.put("13",fly);
-        // getting keySet() into Set
-        Set<String> setOfCountries = flights.keySet();
-
-        // Collection Iterator
-        Iterator<String> iterator = setOfCountries.iterator();
-        //here we iterate through the whole hashtable to find the flight with the requirements that the user has asked
-        //like the date of the flight and the destination and starting city
-        //todo delete the prints and make it actually work with the rest of the program
-        while(iterator.hasNext()) {
-            System.out.println("in while");
-            String key = iterator.next();
-
-            if (flights.get(key).getfrom() == cityfrom && flights.get(key).getTo()== cityto)
-            {
-                System.out.println(flights.get(key).getfrom() + flights.get(key).getTo());
-                System.out.println("true");
-            }
-
-        }
+        //we kept those just in case we want to add new flights
+        //flights.put("12",new Flight("12","samos","athens",LocalTime.parse("05:30"),LocalDate.parse("2001-03-02")));
+        //serializeFlights();
 
     }
+
+
 
     @Override
     public void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException
@@ -59,6 +37,31 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     public Flight getFlightId(String id) throws RemoteException
     {
         return flights.get(id);
+    }
+    @Override
+    public ArrayList<Flight> getFlightWith(String cityfrom, String cityto) throws RemoteException
+    {
+        ArrayList<Flight> tempList = new ArrayList<Flight>();
+        Set<String> ids = flights.keySet();
+
+        // Collection Iterator
+        Iterator<String> iterator = ids.iterator();
+        //here we iterate through the whole hashtable to find the flight with the requirements that the user has asked
+        //like the date of the flight and the destination and starting city
+
+        while(iterator.hasNext()) {
+            System.out.println("in while");
+            String key = iterator.next();
+            Flight tempFlight = flights.get(key);
+            if (tempFlight.getfrom().equals(cityfrom) && tempFlight.getTo().equals(cityto))
+            {
+                tempList.add(tempFlight);
+
+            }
+
+        }
+        return tempList;
+
     }
 
     //used only in case we want to add more flights

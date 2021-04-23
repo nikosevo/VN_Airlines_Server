@@ -38,7 +38,7 @@ public class Flight implements Serializable {
     @Override
     public String toString() {
 
-        return "Flight: " + id + " Departure at: " + depart_time + " Available seats: " + seatsAvailable;
+        return "Flight: " + id + " Departure at: " + depart_time + " Available seats: " + seatsAvailable + " from: " + from + " To: " + to;
     }
 
     public String getId(){return id;}
