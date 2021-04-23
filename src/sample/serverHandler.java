@@ -1,14 +1,14 @@
 package sample;
 
-import sample.Interfaces.FlightOperations;
-import sample.Interfaces.PersonOperations;
+import sample.Interfaces.Operations;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class serverHandler  extends UnicastRemoteObject implements PersonOperations, FlightOperations {
+public class serverHandler  extends UnicastRemoteObject implements Operations
+{
 
     private ArrayList<Flight> flights = new ArrayList<Flight>();
     public serverHandler() throws RemoteException {
@@ -16,6 +16,7 @@ public class serverHandler  extends UnicastRemoteObject implements PersonOperati
         flights.add(new Flight("123","athens","to", LocalTime.parse("08:20")));
 
     }
+
 
     @Override
     public Flight getFlightId(String id) throws RemoteException {
@@ -26,8 +27,5 @@ public class serverHandler  extends UnicastRemoteObject implements PersonOperati
         return null;
     }
 
-    @Override
-    public String getName() throws RemoteException {
-        return null;
-    }
+
 }
