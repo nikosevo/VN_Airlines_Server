@@ -42,4 +42,7 @@ public class Flight implements Serializable {
     }
 
     public String getId(){return id;}
+    public String getfrom(){return from;}
+    public String getTo(){return to;}
+    public LocalDate getDepart_date(){return depart_date;}
 }

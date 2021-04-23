@@ -20,7 +20,7 @@ public class Person implements Serializable
     {
         this.age=age;
         this.email=email;
-        this.name=name;
+        this.name=name;    //name + surname
         this.startcity=startcity;
         this.reservation[0]=flightId;
         this.reservation[1]=seat;
