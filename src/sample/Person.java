@@ -1,11 +1,15 @@
 package sample;
 
+import sample.Intefaces.PersonOperations;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Person implements Serializable
+public class Person implements Serializable , PersonOperations
 {
     private static final long serialVersionUID = 1234567L;  //This is our serialization Id this must be the same on both ends in order to have proper encoding
+
+
 
     private String name;
     private String email;
@@ -23,10 +27,13 @@ public class Person implements Serializable
         this.reservation[0]=flightId;
         this.reservation[1]=seat;
     }
-
+    public String getName()
+    {
+        return name;
+    }
     @Override
     public String toString()
     {
-        return "Person{" + "name='" + name + '\'' + ", email='" + email + '\'' + ", age='" + age + '\'' + ", startcity='" + startcity + '\'' + ", reservation=" + Arrays.toString(reservation) + '}';
+        return "Person{" + "name='" + this.getName() + '\'' + ", email='" + email + '\'' + ", age='" + age + '\'' + ", startcity='" + startcity + '\'' + ", reservation=" + Arrays.toString(reservation) + '}';
     }
 }
