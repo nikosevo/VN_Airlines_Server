@@ -18,7 +18,11 @@ public class serverHandler  extends UnicastRemoteObject implements PersonOperati
     }
 
     @Override
-    public String getFlightId() throws RemoteException {
+    public Flight getFlightId(String id) throws RemoteException {
+        for(Flight f : flights)
+            if(f.getId().equals(id))
+                return f;
+
         return null;
     }
 
