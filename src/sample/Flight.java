@@ -16,12 +16,14 @@ public class Flight implements Serializable {
     private String from;
     private String to;
     private LocalTime depart_time;
+    private LocalDate depart_date;
 
-    Flight(String id, String from, String to,LocalTime depart_time){
+    Flight(String id, String from, String to, LocalTime depart_time, LocalDate depart_date){
         this.id = id;
         this.from = from;
         this.to = to;
         this.depart_time = depart_time;
+        this.depart_date = depart_date;
         seats = new Person[4][25];
         Arrays.fill(seats,null);
         seatsAvailable = 100; // since all the seats are available at the beginning

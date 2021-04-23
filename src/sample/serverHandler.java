@@ -4,6 +4,7 @@ import sample.Interfaces.Operations;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ public class serverHandler  extends UnicastRemoteObject implements Operations
     private ArrayList<Flight> flights = new ArrayList<Flight>();
     public serverHandler() throws RemoteException {
         super();
-        flights.add(new Flight("123","athens","to", LocalTime.parse("08:20")));
+        flights.add(new Flight("123","athens","to", LocalTime.parse("08:20"), LocalDate.parse("2018-12-27")));
 
     }
 
