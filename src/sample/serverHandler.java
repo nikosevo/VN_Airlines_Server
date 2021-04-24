@@ -20,7 +20,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         super();
         deserializeFlights();
         //we kept those just in case we want to add new flights
-        //flights.put("12",new Flight("12","samos","athens",LocalTime.parse("05:30"),LocalDate.parse("2001-03-02")));
+        //flights.put("12",new Flight("12","samos","athens",LocalTime.parse("05:30"),LocalDate.parse("2021-04-24")));
         //serializeFlights();
 
     }
@@ -28,18 +28,18 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 
 
     @Override
-    public void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException
+    public synchronized void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException
     {
         flights.get(flightId).setpersonto(x, y, p);
     }
 
     @Override
-    public Flight getFlightId(String id) throws RemoteException
+    public synchronized Flight getFlightId(String id) throws RemoteException
     {
         return flights.get(id);
     }
     @Override
-    public ArrayList<Flight> getFlightWith(String cityfrom, String cityto) throws RemoteException
+    public synchronized ArrayList<Flight> getFlightWith(String cityfrom, String cityto,LocalDate date) throws RemoteException
     {
         ArrayList<Flight> tempList = new ArrayList<Flight>();
         Set<String> ids = flights.keySet();
@@ -53,7 +53,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
             System.out.println("in while");
             String key = iterator.next();
             Flight tempFlight = flights.get(key);
-            if (tempFlight.getfrom().equals(cityfrom) && tempFlight.getTo().equals(cityto))
+            if (tempFlight.getfrom().equals(cityfrom) && tempFlight.getTo().equals(cityto) && tempFlight.getDepart_date().equals(date))
             {
                 tempList.add(tempFlight);
 

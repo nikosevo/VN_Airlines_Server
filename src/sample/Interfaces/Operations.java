@@ -11,6 +11,6 @@ import java.util.ArrayList;
 
 public interface Operations extends Remote {
     public Flight getFlightId(String id) throws RemoteException;
-    public void addPersontoFlight(String flightId, int x , int y , Person p) throws RemoteException;
-    public ArrayList<Flight> getFlightWith(String cityfrom , String cityto ) throws RemoteException;  //todo add date as well
+    public void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException;
+    public ArrayList<Flight> getFlightWith(String cityfrom, String cityto,LocalDate date) throws RemoteException;  //todo add date as well
 }
