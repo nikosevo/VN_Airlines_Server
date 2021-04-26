@@ -27,7 +27,6 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     }
 
 
-
     @Override
     public synchronized void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException
     {
@@ -39,8 +38,9 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     {
         return flights.get(id);
     }
+
     @Override
-    public synchronized ArrayList<Flight> getFlightWith(String cityfrom, String cityto,LocalDate date) throws RemoteException
+    public synchronized ArrayList<Flight> getFlightWith(String cityfrom, String cityto, LocalDate date) throws RemoteException
     {
         ArrayList<Flight> tempList = new ArrayList<Flight>();
         Set<String> ids = flights.keySet();
@@ -50,7 +50,8 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         //here we iterate through the whole hashtable to find the flight with the requirements that the user has asked
         //like the date of the flight and the destination and starting city
 
-        while(iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             System.out.println("in while");
             String key = iterator.next();
             Flight tempFlight = flights.get(key);
@@ -65,29 +66,44 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 
     }
 
+    @Override
+    public synchronized Boolean checkAvailability(String flightId, int x, int y, Person p) throws RemoteException
+    {
+        return flights.get(flightId).checkseat(x, y);
+
+    }
+
     //used only in case we want to add more flights
-    private void serializeFlights(){
-        try {
+    private void serializeFlights()
+    {
+        try
+        {
 
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("flights.dat"));
             out.writeObject(flights);
             out.close();
             System.out.printf("Serialized data is saved in flights.dat");
-        } catch (IOException i) {
+        } catch (IOException i)
+        {
             i.printStackTrace();
         }
     }
+
     //with this method we add the flights of our dat file to the hashtable
-    private void deserializeFlights(){
-        try {
+    private void deserializeFlights()
+    {
+        try
+        {
 
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("flights.dat"));
             flights = (Hashtable<String, Flight>) in.readObject();
             in.close();
-        } catch (IOException i) {
+        } catch (IOException i)
+        {
             i.printStackTrace();
             return;
-        } catch (ClassNotFoundException c) {
+        } catch (ClassNotFoundException c)
+        {
             System.out.println("Flight class not found");
             c.printStackTrace();
             return;
