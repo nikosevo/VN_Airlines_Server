@@ -22,7 +22,8 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         //we kept those just in case we want to add new flights
         //flights.put("120",new Flight("120","samos","athens",LocalTime.parse("05:50"),LocalDate.parse("2021-04-24")));
         //flights.put("12",new Flight("12","samos","athens",LocalTime.parse("05:20"),LocalDate.parse("2021-04-24")));
-        serializeFlights();
+        //flights.put("123",new Flight("123","samos","athens",LocalTime.parse("05:20"),LocalDate.parse("2021-04-24")));
+        //serializeFlights();
 
     }
 
