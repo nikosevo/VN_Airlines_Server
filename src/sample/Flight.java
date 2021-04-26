@@ -27,13 +27,14 @@ public class Flight implements Serializable
         this.depart_time = depart_time;
         this.depart_date = depart_date;
         seats = new Person[4][25];
-        Arrays.fill(seats, null);
+        //Arrays.fill(seats, null);
         seatsAvailable = 100; // since all the seats are available at the beginning
 
     }
 
     public boolean checkseat(int x, int y)
     {
+
         if (seats[x][y] == null)
         {
             return true;
