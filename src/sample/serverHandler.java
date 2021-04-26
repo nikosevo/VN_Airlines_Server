@@ -69,8 +69,15 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     @Override
     public synchronized Boolean checkAvailability(String flightId, int x, int y, Person p) throws RemoteException
     {
-        return flights.get(flightId).checkseat(x, y);
-
+       if(flights.get(flightId).checkseat(x, y))
+       {
+           flights.get(flightId).setpersonto(x,y,p);
+           return true;
+       }
+        else
+       {
+           return false;
+       }
     }
 
     //used only in case we want to add more flights
