@@ -32,6 +32,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     public synchronized void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException
     {
         flights.get(flightId).setpersonto(x, y, p);
+        p.setSeat(flightId, Integer.toString(x) + "-" + Integer.toString(y));
     }
 
     @Override
@@ -70,21 +71,38 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     @Override
     public synchronized Boolean checkAvailability(String flightId, int x, int y, Person p) throws RemoteException
     {
-       if(flights.get(flightId).checkseat(x, y))
-       {
-           flights.get(flightId).setpersonto(x,y,p);
-           return true;
-       }
-        else
-       {
-           return false;
-       }
+        if (flights.get(flightId).checkseat(x, y))
+        {
+            flights.get(flightId).setpersonto(x, y, p);
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
     @Override
-    public synchronized Person getPersoninfo(String id,String name) throws RemoteException
+    public synchronized Person getPersoninfo(String id, String name) throws RemoteException
     {
         return flights.get(id).checkreservation(name);
+    }
+
+    @Override
+    public synchronized ArrayList<String> occupiedSeats(String id) throws RemoteException
+    {
+        ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < 25; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (!flights.get(id).checkseat(i, j))
+                {
+                    list.add(Integer.toString(i) +"-"+ Integer.toString(j));
+                }
+            }
+        }
+
+        return list;
     }
 
     //used only in case we want to add more flights
@@ -101,6 +119,11 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         {
             i.printStackTrace();
         }
+    }
+
+    public void addflight(Flight f)
+    {
+        flights.put(f.getId(), f);
     }
 
     //with this method we add the flights of our dat file to the hashtable

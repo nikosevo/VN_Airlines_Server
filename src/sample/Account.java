@@ -1,7 +1,7 @@
 package sample;
 
 import java.util.ArrayList;
-
+//todo fix or delete this whole class
 public class Account
 {
     private String password;              //this is going to be hashed ;)
