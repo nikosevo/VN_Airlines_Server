@@ -75,7 +75,9 @@ public class serverHandler extends UnicastRemoteObject implements Operations
             String[] parts = list.get(i).split("-");
             String part1 = parts[0];
             String part2 = parts[1];
-            if (!flights.get(flightId).checkseat(Integer.parseInt("part1-1"), Integer.parseInt("part2-1")))  //if this finds any false it returns false
+            int num1 =Integer.parseInt(part1);
+            int num2 = Integer.parseInt(part2);
+            if (!flights.get(flightId).checkseat(num1-1, num2-1))  //if this finds any false it returns false
             {
                 return false;
             }
