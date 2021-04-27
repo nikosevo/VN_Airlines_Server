@@ -109,7 +109,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         return list;
     }
 
-    @Override
+    /*@Override
     public List<ArrayList> tempoccumpiedSeats(ArrayList<String> seats , String id) throws RemoteException
     {
 
@@ -118,7 +118,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 
         return  null; //todo add return list or whatever
     }
-
+*/
     //used only in case we want to add more flights
     private void serializeFlights()
     {
