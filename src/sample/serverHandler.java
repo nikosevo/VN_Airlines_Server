@@ -81,6 +81,12 @@ public class serverHandler extends UnicastRemoteObject implements Operations
        }
     }
 
+    @Override
+    public synchronized Person getPersoninfo(String id,String name) throws RemoteException
+    {
+        return flights.get(id).checkreservation(name);
+    }
+
     //used only in case we want to add more flights
     private void serializeFlights()
     {

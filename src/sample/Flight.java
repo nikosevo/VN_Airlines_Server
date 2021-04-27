@@ -48,7 +48,20 @@ public class Flight implements Serializable
     {
         this.seats[x][y] = p;
     }
-
+    public Person checkreservation (String name)
+    {
+        for(int i=0;i<4;i++)
+        {
+            for (int j=0;j<25;j++)
+            {
+                if (seats[i][j].getName() == name)
+                {
+                    return seats[i][j];
+                }
+            }
+        }
+        return null ;
+    }
     @Override
     public String toString()
     {

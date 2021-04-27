@@ -14,4 +14,5 @@ public interface Operations extends Remote {
     public void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException;
     public ArrayList<Flight> getFlightWith(String cityfrom, String cityto,LocalDate date) throws RemoteException;
     public Boolean checkAvailability(String flightId,int x,int y,Person p) throws RemoteException;
+    public Person getPersoninfo(String id,String name) throws RemoteException;
 }
