@@ -6,14 +6,13 @@ import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 public class serverHandler extends UnicastRemoteObject implements Operations
 {
 
     private Hashtable<String, Flight> flights = new Hashtable<String, Flight>();
-
+    //private List<Object[][]> tempoccupied = new ArrayList<>(); todo fix this
 
     public serverHandler() throws RemoteException
     {
@@ -69,16 +68,21 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     }
 
     @Override
-    public synchronized Boolean checkAvailability(String flightId, int x, int y, Person p) throws RemoteException
+    public synchronized Boolean checkAvailability(String flightId, ArrayList<String> list) throws RemoteException
     {
-        if (flights.get(flightId).checkseat(x, y))
+        for (int i=0;i<list.size();i++)
         {
-            flights.get(flightId).setpersonto(x, y, p);
-            return true;
-        } else
-        {
-            return false;
+            String[] parts = list.get(i).split("-");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            if (!flights.get(flightId).checkseat(Integer.parseInt("part1-1"), Integer.parseInt("part2-1")))  //if this finds any false it returns false
+            {
+                return false;
+            }
+
         }
+        return true;  // at the end of for if not false found returns true
+
     }
 
     @Override
@@ -103,6 +107,16 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         }
 
         return list;
+    }
+
+    @Override
+    public List<ArrayList> tempoccumpiedSeats(ArrayList<String> seats , String id) throws RemoteException
+    {
+
+       // tempoccupied.add((ArrayList)seats);
+        //tempoccupied.add(occupiedSeats(id));
+
+        return  null; //todo add return list or whatever
     }
 
     //used only in case we want to add more flights
