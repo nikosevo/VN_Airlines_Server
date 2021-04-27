@@ -23,5 +23,5 @@ public interface Operations extends Remote
 
     public ArrayList<String> occupiedSeats(String id) throws RemoteException;
 
-    public List<ArrayList> tempoccumpiedSeats(ArrayList<String> seats , String id) throws  RemoteException;
+    //public List<ArrayList> tempoccumpiedSeats(ArrayList<String> seats , String id) throws  RemoteException;
 }
