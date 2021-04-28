@@ -12,7 +12,6 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 {
 
     private Hashtable<String, Flight> flights = new Hashtable<String, Flight>();
-    //private List<Object[][]> tempoccupied = new ArrayList<>(); todo fix this
 
     public serverHandler() throws RemoteException
     {
@@ -28,20 +27,20 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 
 
     @Override
-    public synchronized void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException
+    public void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException
     {
         flights.get(flightId).setpersonto(x, y, p);
         p.setSeat(flightId, Integer.toString(x) + "-" + Integer.toString(y));
     }
 
     @Override
-    public synchronized Flight getFlightId(String id) throws RemoteException
+    public Flight getFlightId(String id) throws RemoteException
     {
         return flights.get(id);
     }
 
     @Override
-    public synchronized ArrayList<Flight> getFlightWith(String cityfrom, String cityto, LocalDate date) throws RemoteException
+    public ArrayList<Flight> getFlightWith(String cityfrom, String cityto, LocalDate date) throws RemoteException
     {
         ArrayList<Flight> tempList = new ArrayList<Flight>();
         Set<String> ids = flights.keySet();
@@ -66,9 +65,8 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         return tempList;
 
     }
-
     @Override
-    public synchronized Boolean checkAvailability(String flightId, ArrayList<String> list) throws RemoteException
+    public Boolean checkAvailability(String flightId, ArrayList<String> list) throws RemoteException
     {
         for (int i=0;i<list.size();i++)
         {
@@ -86,13 +84,21 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     }
 
     @Override
-    public synchronized Person getPersoninfo(String id, String name) throws RemoteException
+    public Boolean bookTemporarily(String flightId, ArrayList<String> wishlist) throws RemoteException {
+
+        return flights.get(flightId).bookTemporarily(wishlist);
+
+    }
+
+
+    @Override
+    public Person getPersoninfo(String id, String name) throws RemoteException
     {
         return flights.get(id).checkreservation(name);
     }
 
     @Override
-    public synchronized ArrayList<String> occupiedSeats(String id) throws RemoteException
+    public ArrayList<String> occupiedSeats(String id) throws RemoteException
     {
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < 25; i++)
@@ -101,7 +107,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
             {
                 if (!flights.get(id).checkseat(i, j))
                 {
-                    list.add(Integer.toString(i) +"-"+ Integer.toString(j));
+                    list.add(Integer.toString(i+1) +"-"+ Integer.toString(j+1));
                 }
             }
         }
@@ -109,16 +115,32 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         return list;
     }
 
-    /*@Override
-    public List<ArrayList> tempoccumpiedSeats(ArrayList<String> seats , String id) throws RemoteException
-    {
-
-       // tempoccupied.add((ArrayList)seats);
-        //tempoccupied.add(occupiedSeats(id));
-
-        return  null; //todo add return list or whatever
+    @Override
+    public ArrayList<String> tempOccupiedSeats(String id) throws RemoteException {
+        return flights.get(id).getTempOccupied();
     }
-*/
+
+    @Override
+    public Boolean booknow(String flightId, ArrayList<String> wishlist, ArrayList<Person> person) {
+        //the wishlist.sizse and person.size will always be the same so we iterate with the same for
+        for(int i = 0 ; i < wishlist.size() ; i++){
+            String tmpSeat = wishlist.get(i);
+            String[] parts = tmpSeat.split("-");
+
+            try{
+                int x = Integer.parseInt(parts[0]) - 1;
+                int y = Integer.parseInt(parts[1]) - 1 ;
+                flights.get(flightId).setpersonto(x,y,person.get(i));
+                return true;
+            }
+            catch (NumberFormatException ex){
+                ex.printStackTrace();
+            }
+            //and now add the person the right seat in the flight id
+        }
+        return false;
+    }
+
     //used only in case we want to add more flights
     private void serializeFlights()
     {

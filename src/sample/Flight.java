@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Flight implements Serializable
 {
 
     private static final long serialVersionUID = -1234567L;
+    private ArrayList<BookTemporarily> tempOccupied = new ArrayList<>();
+
+
 
     private Person seats[][] = {null}; //an double array that represents the seats of the plane
     private int seatsAvailable;
@@ -65,6 +69,32 @@ public class Flight implements Serializable
             }
         }
         return null;
+    }
+
+    public boolean bookTemporarily(ArrayList<String> wishlist){
+        for(BookTemporarily b:tempOccupied)
+            for(String s : b.getWishlist())
+                for(String s2:wishlist)
+                    if(s.equals(s2))
+                        return false; //ooofff wtf
+
+
+        tempOccupied.add(new BookTemporarily(wishlist,this));
+        return true;
+    }
+    public void removeThread(BookTemporarily bt){
+        for(BookTemporarily b : tempOccupied){
+            if(b.getWishlist().equals(bt.getWishlist()))
+                tempOccupied.remove(b);
+        }
+        System.out.println( bt.getWishlist() + "removed");
+    }
+    public ArrayList<String> getTempOccupied(){
+        ArrayList<String> tmpArray = new ArrayList<>();
+        for(BookTemporarily bk : tempOccupied)
+            for(String seat : bk.getWishlist())
+                tmpArray.add(seat);
+        return tmpArray;
     }
 
     @Override
