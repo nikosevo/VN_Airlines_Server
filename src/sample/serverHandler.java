@@ -10,7 +10,8 @@ import java.util.*;
 
 public class serverHandler extends UnicastRemoteObject implements Operations
 {
-
+    //We make use of a Hashtable for its effieciency in searching and due to the fact that each flight is unique so
+    //a Hashtable is the perfect data structure for our problem
     private Hashtable<String, Flight> flights = new Hashtable<String, Flight>();
 
     public serverHandler() throws RemoteException
@@ -25,36 +26,35 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 
     }
 
-
+    //Simple method that adds a person to the given seat and flight based on the flights Id
     @Override
     public void addPersontoFlight(String flightId, int x, int y, Person p) throws RemoteException
     {
-        flights.get(flightId).setpersonto(x, y, p);
-        p.setSeat(flightId, Integer.toString(x) + "-" + Integer.toString(y));
+        flights.get(flightId).setpersonto(x, y, p); //we use the flight Id and to that flight we add the person
+        p.setSeat(flightId, Integer.toString(x) + "-" + Integer.toString(y)); //then we give the number seat to the seat
     }
 
+    //Simple method that returns the flights number Id
     @Override
     public Flight getFlightId(String id) throws RemoteException
     {
         return flights.get(id);
     }
 
+    //Method that returns the list with the desired destination and date that the user wishes to travel
     @Override
     public ArrayList<Flight> getFlightWith(String cityfrom, String cityto, LocalDate date) throws RemoteException
     {
-        ArrayList<Flight> tempList = new ArrayList<Flight>();
-        Set<String> ids = flights.keySet();
+        ArrayList<Flight> tempList = new ArrayList<Flight>();  //we make a new list to send
+        Set<String> ids = flights.keySet();   //we create a set of Strings and match it to he flihts keys
 
-        // Collection Iterator
-        Iterator<String> iterator = ids.iterator();
         //here we iterate through the whole hashtable to find the flight with the requirements that the user has asked
         //like the date of the flight and the destination and starting city
 
-        while (iterator.hasNext())
+        for (String id : ids)
         {
             System.out.println("in while");
-            String key = iterator.next();
-            Flight tempFlight = flights.get(key);
+            Flight tempFlight = flights.get(id);
             if (tempFlight.getfrom().equals(cityfrom) && tempFlight.getTo().equals(cityto) && tempFlight.getDepart_date().equals(date))
             {
                 tempList.add(tempFlight);
@@ -65,15 +65,17 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         return tempList;
 
     }
+
+    //We use this method to check if the selected seats by the user are available
     @Override
     public Boolean checkAvailability(String flightId, ArrayList<String> list) throws RemoteException
     {
-        for (int i=0;i<list.size();i++)
+        for (String s : list)
         {
-            String[] parts = list.get(i).split("-");
-            int num1 =Integer.parseInt(parts[0]);
+            String[] parts = s.split("-");
+            int num1 = Integer.parseInt(parts[0]);
             int num2 = Integer.parseInt(parts[1]);
-            if (!flights.get(flightId).checkseat(num1-1, num2-1))  //if this finds any false it returns false
+            if (!flights.get(flightId).checkseat(num1 - 1, num2 - 1))  //if this finds any false it returns false
             {
                 return false;
             }
@@ -83,20 +85,24 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 
     }
 
+    //This method gets a list from the user with the selected on the user UI seats and reserves them for a short amount of time
+    //using the bookTemporarily method
     @Override
-    public Boolean bookTemporarily(String flightId, ArrayList<String> wishlist) throws RemoteException {
+    public Boolean bookTemporarily(String flightId, ArrayList<String> wishlist) throws RemoteException
+    {
 
         return flights.get(flightId).bookTemporarily(wishlist);
 
     }
 
-
+    //Simple method that allows us to find a user in a flight
     @Override
     public Person getPersoninfo(String id, String name) throws RemoteException
     {
         return flights.get(id).checkreservation(name);
     }
 
+    //Method that returns to the user the occupied seats but from all the users not just himself
     @Override
     public ArrayList<String> occupiedSeats(String id) throws RemoteException
     {
@@ -107,7 +113,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
             {
                 if (!flights.get(id).checkseat(i, j))
                 {
-                    list.add(Integer.toString(i+1) +"-"+ Integer.toString(j+1));
+                    list.add(Integer.toString(i + 1) + "-" + Integer.toString(j + 1));
                 }
             }
         }
@@ -115,25 +121,32 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         return list;
     }
 
+    //method that returns the booked seats not the temporarily occupied
     @Override
-    public ArrayList<String> tempOccupiedSeats(String id) throws RemoteException {
+    public ArrayList<String> tempOccupiedSeats(String id) throws RemoteException
+    {
         return flights.get(id).getTempOccupied();
     }
 
+    //Method that actually books the seats and add the user to the flight
     @Override
-    public Boolean booknow(String flightId, ArrayList<String> wishlist, ArrayList<Person> person) {
-        //the wishlist.sizse and person.size will always be the same so we iterate with the same for
-        for(int i = 0 ; i < wishlist.size() ; i++){
+    public Boolean booknow(String flightId, ArrayList<String> wishlist, ArrayList<Person> person)
+    {
+        //the wishlist.size and person.size will always be the same so we iterate with the same for
+        for (int i = 0; i < wishlist.size(); i++)
+        {
             String tmpSeat = wishlist.get(i);
             String[] parts = tmpSeat.split("-");
 
-            try{
+            try
+            {
                 int x = Integer.parseInt(parts[0]) - 1;
-                int y = Integer.parseInt(parts[1]) - 1 ;
-                flights.get(flightId).setpersonto(x,y,person.get(i));
+                int y = Integer.parseInt(parts[1]) - 1;
+                flights.get(flightId).setpersonto(x, y, person.get(i)); //We set the person to the flight
+                person.get(i).setSeat(flightId, tmpSeat);   //We give to the person his numbered seat
                 return true;
-            }
-            catch (NumberFormatException ex){
+            } catch (NumberFormatException ex)
+            {
                 ex.printStackTrace();
             }
             //and now add the person the right seat in the flight id
@@ -150,13 +163,14 @@ public class serverHandler extends UnicastRemoteObject implements Operations
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("flights.dat"));
             out.writeObject(flights);
             out.close();
-            System.out.printf("Serialized data is saved in flights.dat");
+            System.out.println("Serialized data is saved in flights.dat");
         } catch (IOException i)
         {
             i.printStackTrace();
         }
     }
 
+    //Method that adds any newly created flight to our list
     public void addflight(Flight f)
     {
         flights.put(f.getId(), f);
@@ -167,19 +181,16 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     {
         try
         {
-
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("flights.dat"));
             flights = (Hashtable<String, Flight>) in.readObject();
             in.close();
         } catch (IOException i)
         {
             i.printStackTrace();
-            return;
         } catch (ClassNotFoundException c)
         {
             System.out.println("Flight class not found");
             c.printStackTrace();
-            return;
         }
     }
 

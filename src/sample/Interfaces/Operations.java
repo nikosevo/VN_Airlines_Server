@@ -2,12 +2,10 @@ package sample.Interfaces;
 
 import sample.Flight;
 import sample.Person;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public interface Operations extends Remote
 {

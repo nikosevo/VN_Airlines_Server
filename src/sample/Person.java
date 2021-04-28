@@ -34,6 +34,7 @@ public class Person implements Serializable
         return "Person{" + "name='" + this.getName() + '\'' + ", email='" + email + '\'' + ", age='" + age + '\'' + ", startcity='" + startcity + '\'' + ", reservation=" + Arrays.toString(reservation) + '}';
     }
 
+    //With this method we give the number of the flight and the seat to the user
     public void setSeat(String flightId, String seat)
     {
         this.reservation[0] = flightId;

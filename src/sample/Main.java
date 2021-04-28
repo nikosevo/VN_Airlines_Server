@@ -1,3 +1,5 @@
+//Icsd18174 Chrysovalantis Pateiniotis
+//Icsd18218 Nikos Tzekas
 package sample;
 
 import java.rmi.Naming;
@@ -5,7 +7,7 @@ import java.rmi.registry.Registry;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Main
+public class Main  //Main class that initializes the program
 {
 
     public static void main(String[] args)
@@ -15,6 +17,7 @@ public class Main
 
         try
         {
+            //We activate the server and initiate it we use the 1099 for our port
             Registry r = java.rmi.registry.LocateRegistry.createRegistry(1099);
 
             serverHandler server = new serverHandler();
