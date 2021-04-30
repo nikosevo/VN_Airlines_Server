@@ -90,8 +90,13 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     @Override
     public Boolean bookTemporarily(String flightId, ArrayList<String> wishlist) throws RemoteException
     {
-
-        return flights.get(flightId).bookTemporarily(wishlist);
+        if (!wishlist.isEmpty())
+        {
+            return flights.get(flightId).bookTemporarily(wishlist);
+        }
+        else{
+            return false;
+        }
 
     }
 

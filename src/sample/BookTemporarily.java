@@ -9,10 +9,13 @@ public class BookTemporarily implements Runnable
 
     public BookTemporarily(ArrayList<String> wishlist, Flight flight)
     {
-        this.wishlist = wishlist;
-        this.flight = flight;
-        Thread t = new Thread(this);
-        t.start();
+            this.wishlist = wishlist;
+            this.flight = flight;
+            Thread t = new Thread(this);
+            t.start();
+
+            System.out.println("Empty list bruh!");
+
     }
 
     @Override

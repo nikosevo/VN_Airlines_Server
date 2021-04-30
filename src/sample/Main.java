@@ -12,7 +12,7 @@ public class Main  //Main class that initializes the program
 
     public static void main(String[] args)
     {
-        Person per = new Person("val", "@test", "12", "chios"); //test subject
+        Person per = new Person("val", "@test", "12", "chios","578415698"); //test subject
         System.out.println(per.toString());
 
         try
