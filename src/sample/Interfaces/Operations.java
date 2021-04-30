@@ -25,5 +25,5 @@ public interface Operations extends Remote
 
     public ArrayList<String> tempOccupiedSeats(String id) throws RemoteException;
 
-    public Boolean booknow(String flightId , ArrayList<String> wishlist , ArrayList<Person> person) throws RemoteException;
+    public Boolean booknow(String flightId , String seat , Person person) throws RemoteException;
 }

@@ -135,27 +135,22 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 
     //Method that actually books the seats and add the user to the flight
     @Override
-    public Boolean booknow(String flightId, ArrayList<String> wishlist, ArrayList<Person> person)
-    {
+    public Boolean booknow(String flightId, String seat, Person person) {
         //the wishlist.size and person.size will always be the same so we iterate with the same for
-        for (int i = 0; i < wishlist.size(); i++)
-        {
-            String tmpSeat = wishlist.get(i);
-            String[] parts = tmpSeat.split("-");
 
-            try
-            {
-                int x = Integer.parseInt(parts[0]) - 1;
-                int y = Integer.parseInt(parts[1]) - 1;
-                flights.get(flightId).setpersonto(x, y, person.get(i)); //We set the person to the flight
-                person.get(i).setSeat(flightId, tmpSeat);   //We give to the person his numbered seat
-                return true;
-            } catch (NumberFormatException ex)
-            {
-                ex.printStackTrace();
-            }
-            //and now add the person the right seat in the flight id
+        String[] parts = seat.split("-");
+
+        try {
+            int x = Integer.parseInt(parts[0]) - 1;
+            int y = Integer.parseInt(parts[1]) - 1;
+            flights.get(flightId).setpersonto(x, y,person); //We set the person to the flight
+            person.setSeat(flightId, seat);   //We give to the person his numbered seat
+            return true;
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
         }
+        //and now add the person the right seat in the flight id
+
         return false;
     }
 
