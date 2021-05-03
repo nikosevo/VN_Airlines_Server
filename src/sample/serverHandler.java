@@ -136,7 +136,8 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     //Method that actually books the seats and add the user to the flight
     @Override
     public Boolean booknow(String flightId, String seat, Person person) {
-        //the wishlist.size and person.size will always be the same so we iterate with the same for
+        //the wishlist.size and person.size will always be the same so we iterate with the same f
+        //this comment is so important that if u delete it the world will go boom
 
         String[] parts = seat.split("-");
 
