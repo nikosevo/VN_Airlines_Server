@@ -151,7 +151,6 @@ public class serverHandler extends UnicastRemoteObject implements Operations
             ex.printStackTrace();
         }
         //and now add the person the right seat in the flight id
-
         return false;
     }
 

@@ -6,6 +6,7 @@ public class BookTemporarily implements Runnable
 {
     private ArrayList<String> wishlist;
     private Flight flight;
+    private int time;
 
     public BookTemporarily(ArrayList<String> wishlist, Flight flight)
     {
@@ -13,7 +14,7 @@ public class BookTemporarily implements Runnable
             this.flight = flight;
             Thread t = new Thread(this);
             t.start();
-
+            time = 3;
             System.out.println("Empty list bruh!");
 
     }
@@ -21,10 +22,11 @@ public class BookTemporarily implements Runnable
     @Override
     public void run()
     {
+
         System.out.println("seats: " + wishlist + "booked for 10 sec");
         try
-        {
-            Thread.sleep(1000 * 10);
+        {               //milli * seconds * minutes
+            Thread.sleep(1000 * 60 * time);
         } catch (InterruptedException e)
         {
             e.printStackTrace();
@@ -32,6 +34,10 @@ public class BookTemporarily implements Runnable
         System.out.println("seats : " + wishlist + " are now free");
         flight.removeThread(this);
 
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public ArrayList<String> getWishlist()
