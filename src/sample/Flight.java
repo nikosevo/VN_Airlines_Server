@@ -19,14 +19,19 @@ public class Flight implements Serializable
     private String to;
     private LocalTime depart_time;
     private LocalDate depart_date;
+    private LocalTime arrival_time;
+    private LocalDate arrival_date;
 
-    Flight(String id, String from, String to, LocalTime depart_time, LocalDate depart_date)
+    Flight(String id, String from, String to, LocalTime depart_time, LocalDate depart_date,LocalTime arrival_time,LocalDate arrival_date)
     {
         this.id = id;
         this.from = from;
         this.to = to;
         this.depart_time = depart_time;
         this.depart_date = depart_date;
+        this.arrival_time = arrival_time;
+        this.arrival_date= arrival_date;
+
         seats = new Person[25][4];
         //Arrays.fill(seats, null);
         seatsAvailable = 100; // since all the seats are available at the beginning
@@ -115,5 +120,16 @@ public class Flight implements Serializable
     {
         return depart_date;
     }
-
+    public LocalDate getArrival_date()
+    {
+        return arrival_date;
+    }
+    public LocalTime getDepart_time()
+    {
+        return depart_time;
+    }
+    public LocalTime getArrival_time()
+    {
+        return arrival_time;
+    }
 }

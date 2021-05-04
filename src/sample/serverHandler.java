@@ -7,10 +7,11 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class serverHandler extends UnicastRemoteObject implements Operations
 {
-    //We make use of a Hashtable for its effieciency in searching and due to the fact that each flight is unique so
+    //We make use of a Hashtable for its efficiency in searching and due to the fact that each flight is unique so
     //a Hashtable is the perfect data structure for our problem
     private Hashtable<String, Flight> flights = new Hashtable<String, Flight>();
 
@@ -93,8 +94,8 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         if (!wishlist.isEmpty())
         {
             return flights.get(flightId).bookTemporarily(wishlist);
-        }
-        else{
+        } else
+        {
             return false;
         }
 
@@ -135,24 +136,70 @@ public class serverHandler extends UnicastRemoteObject implements Operations
 
     //Method that actually books the seats and add the user to the flight
     @Override
-    public Boolean booknow(String flightId, String seat, Person person) {
+    public Boolean booknow(String flightId, String seat, Person person)
+    {
         //the wishlist.size and person.size will always be the same so we iterate with the same f
         //this comment is so important that if u delete it the world will go boom
 
         String[] parts = seat.split("-");
 
-        try {
+        try
+        {
             int x = Integer.parseInt(parts[0]) - 1;
             int y = Integer.parseInt(parts[1]) - 1;
-            flights.get(flightId).setpersonto(x, y,person); //We set the person to the flight
+            flights.get(flightId).setpersonto(x, y, person); //We set the person to the flight
             person.setSeat(flightId, seat);   //We give to the person his numbered seat
             return true;
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex)
+        {
             ex.printStackTrace();
         }
         //and now add the person the right seat in the flight id
         return false;
     }
+
+    @Override
+    public ArrayList<String> flightinfo(String name, String flightid) throws RemoteException
+    {
+        ArrayList<String> info = new ArrayList<>();
+        //top info
+        info.add(flights.get(flightid).checkreservation(name).getName());
+        info.add(seatconvertor(flights.get(flightid).checkreservation(name).getSeat()));
+        info.add(flights.get(flightid).checkreservation(name).getFlightid());
+        //Departure info
+        info.add(""+flights.get(flightid).getDepart_date());
+        info.add(""+flights.get(flightid).getDepart_time());
+        info.add(flights.get(flightid).getfrom());
+        //Arrival info
+        info.add(""+flights.get(flightid).getArrival_date());
+        info.add(""+flights.get(flightid).getArrival_time());
+        info.add(flights.get(flightid).getTo());
+        return info;
+    }
+
+    private String seatconvertor(String seat)
+    {
+
+        String[] parts = seat.split("-");
+        switch (parts[1])
+        {
+            case "1":
+                parts[1] = "A";
+                break;
+            case "2":
+                parts[1] = "B";
+                break;
+            case "3":
+                parts[1] = "C";
+                break;
+            case "4":
+                parts[1] = "D";
+                break;
+        }
+        return parts[0] + "-" + parts[1];
+
+    }
+
 
     //used only in case we want to add more flights
     private void serializeFlights()

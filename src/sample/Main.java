@@ -24,7 +24,7 @@ public class Main  //Main class that initializes the program
             Naming.rebind("//localhost:1099/valnik", server);
             System.out.println("serber up and renning");
 //////////////////test
-            Flight temp = new Flight("144", "test", "test2", LocalTime.parse("10:15:45"), LocalDate.parse("2021-05-05"));
+            Flight temp = new Flight("144", "test", "test2", LocalTime.parse("10:15:45"), LocalDate.parse("2021-05-05"),LocalTime.parse("11:15:45"), LocalDate.parse("2021-05-05"));
             server.addflight(temp);
             server.addPersontoFlight("144", 22, 2, per);
             System.out.println(server.getPersoninfo("144", "val"));
