@@ -6,10 +6,11 @@ import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Set;
 
-public class serverHandler extends UnicastRemoteObject implements Operations
+public class serverHandler extends UnicastRemoteObject implements Operations , Serializable
 {
     //We make use of a Hashtable for its efficiency in searching and due to the fact that each flight is unique so
     //a Hashtable is the perfect data structure for our problem
@@ -18,7 +19,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     public serverHandler() throws RemoteException
     {
         super();
-        deserializeFlights();
+
         //we kept those just in case we want to add new flights
         //flights.put("120",new Flight("120","samos","athens",LocalTime.parse("05:50"),LocalDate.parse("2021-04-24")));
         //flights.put("12",new Flight("12","samos","athens",LocalTime.parse("05:20"),LocalDate.parse("2021-04-24")));
@@ -206,7 +207,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     }
 
 
-    //used only in case we want to add more flights
+    //used only in case we want to add more flights and this need to be turned to public due to continuity
     private void serializeFlights()
     {
         try
@@ -229,12 +230,13 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     }
 
     //with this method we add the flights of our dat file to the hashtable
-    private void deserializeFlights()
+    public void deserializeFlights()
     {
         try
         {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("flights.dat"));
             flights = (Hashtable<String, Flight>) in.readObject();
+            System.out.println(flights);
             in.close();
         } catch (IOException i)
         {

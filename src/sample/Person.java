@@ -11,16 +11,17 @@ public class Person implements Serializable
     private String name;
     private String email;
     private String age;
-    private String startcity;    //this is going to be the city that we will use to filter the results of the search
+    //private String startcity;    //this is going to be the city that we will use to filter the results of the search
     private String reservation[] = new String[2];   //This is going to be used to store the data of the flight Id and the number of the seat in the form of string
 
     //Here is our constructor
-    public Person(String name, String email, String age, String startcity,String tele)
+    public Person(String name, String email, String age, String tele)
     {
+        this.tele = tele;
         this.age = age;
         this.email = email;
         this.name = name;    //name + surname
-        this.startcity = startcity;
+
     }
 
     public String getName()
@@ -31,7 +32,7 @@ public class Person implements Serializable
     @Override
     public String toString()
     {
-        return "Person{" + "name='" + this.getName() + '\'' + ", email='" + email + '\'' + ", age='" + age + '\'' + ", startcity='" + startcity + '\'' + ", reservation=" + Arrays.toString(reservation) + '}';
+        return "Person{" + "name='" + this.getName() + '\'' + ", email='" + email + '\'' + ", age='" + age + '\''  + ", reservation=" + Arrays.toString(reservation) + '}';
     }
 
     public String getFlightid()
