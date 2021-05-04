@@ -26,7 +26,7 @@ public class BookTemporarily implements Runnable
         System.out.println("seats: " + wishlist + "booked for 10 sec");
         try
         {               //milli * seconds * minutes
-            Thread.sleep(1000 * 60 * time);
+            Thread.sleep(1000 * 10 * time);
         } catch (InterruptedException e)
         {
             e.printStackTrace();
@@ -36,12 +36,10 @@ public class BookTemporarily implements Runnable
 
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
-
     public ArrayList<String> getWishlist()
     {
         return wishlist;
     }
+    public void stop(){flight.removeThread(this);}
+
 }

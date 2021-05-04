@@ -85,6 +85,10 @@ public class Flight implements Serializable
         tempOccupied.removeIf(b -> b.getWishlist().equals(bt.getWishlist()));
         System.out.println(bt.getWishlist() + "removed");
     }
+    public void removeThread(ArrayList<String> wishlist){
+        tempOccupied.removeIf(b-> b.getWishlist().equals(wishlist));
+        System.out.println("removed");
+    }
 
     public ArrayList<String> getTempOccupied()
     {
