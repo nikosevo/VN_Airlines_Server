@@ -157,7 +157,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         //and now add the person the right seat in the flight id
         return false;
     }
-
+    //method that returns the flightinfo and sends them to the user UI to be displayed
     @Override
     public ArrayList<String> flightinfo(String name, String flightid) throws RemoteException
     {
@@ -182,6 +182,9 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     {
 
         String[] parts = seat.split("-");
+        int temp = Integer.parseInt(parts[1])-1;
+        parts[1]=temp+"";
+        System.out.println(parts[1]);
         switch (parts[1])
         {
             case "0":
@@ -197,8 +200,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
                 parts[1] = "D";
                 break;
         }
-        int temp =Integer.parseInt(parts[0]) + 1;
-        parts[0] =temp+"";
+
         return parts[0] + "-" + parts[1];
 
     }
