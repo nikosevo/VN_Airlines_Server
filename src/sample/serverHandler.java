@@ -160,7 +160,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
     //method that returns the flightinfo and sends them to the user UI to be displayed
     @Override
     public ArrayList<String> flightinfo(String name, String flightid) throws RemoteException
-    {
+    {   //this is for testing kai kala
         ArrayList<String> info = new ArrayList<>();
         //top info
         info.add(flights.get(flightid).checkreservation(name).getName());
