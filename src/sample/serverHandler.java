@@ -174,6 +174,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         info.add(""+flights.get(flightid).getArrival_date());
         info.add(""+flights.get(flightid).getArrival_time());
         info.add(flights.get(flightid).getTo());
+
         return info;
     }
 
@@ -183,19 +184,21 @@ public class serverHandler extends UnicastRemoteObject implements Operations
         String[] parts = seat.split("-");
         switch (parts[1])
         {
-            case "1":
+            case "0":
                 parts[1] = "A";
                 break;
-            case "2":
+            case "1":
                 parts[1] = "B";
                 break;
-            case "3":
+            case "2":
                 parts[1] = "C";
                 break;
-            case "4":
+            case "3":
                 parts[1] = "D";
                 break;
         }
+        int temp =Integer.parseInt(parts[0]) + 1;
+        parts[0] =temp+"";
         return parts[0] + "-" + parts[1];
 
     }
