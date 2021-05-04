@@ -5,8 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class Flight implements Serializable
-{
+public class Flight implements Serializable {
 
     private static final long serialVersionUID = -1234567L;
     private ArrayList<BookTemporarily> tempOccupied = new ArrayList<>();
@@ -21,16 +20,17 @@ public class Flight implements Serializable
     private LocalDate depart_date;
     private LocalTime arrival_time;
     private LocalDate arrival_date;
+    private int cost;
 
-    Flight(String id, String from, String to, LocalTime depart_time, LocalDate depart_date,LocalTime arrival_time,LocalDate arrival_date)
-    {
+    Flight(String id, String from, String to, LocalTime depart_time, LocalDate depart_date, LocalTime arrival_time, LocalDate arrival_date, int cost) {
         this.id = id;
         this.from = from;
         this.to = to;
         this.depart_time = depart_time;
         this.depart_date = depart_date;
         this.arrival_time = arrival_time;
-        this.arrival_date= arrival_date;
+        this.arrival_date = arrival_date;
+        this.cost = cost;
 
         seats = new Person[25][4];
         //Arrays.fill(seats, null);
@@ -38,27 +38,15 @@ public class Flight implements Serializable
 
     }
 
-    public boolean checkseat(int x, int y)
-    {
+    public boolean checkseat(int x, int y) { return seats[x][y] == null; }
 
-        return seats[x][y] == null;
-    }
+    public void setpersonto(int x, int y, Person p) { this.seats[x][y] = p; seatsAvailable--;}
 
-    public void setpersonto(int x, int y, Person p)
-    {
-        this.seats[x][y] = p;
-    }
-
-    public Person checkreservation(String name)
-    {
-        for (int i = 0; i < 25; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                if (seats[i][j] != null)
-                {
-                    if (seats[i][j].getName().equals(name))
-                    {
+    public Person checkreservation(String name) {
+        for (int i = 0; i < 25; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (seats[i][j] != null) {
+                    if (seats[i][j].getName().equals(name)) {
                         return seats[i][j];
                     }
                 }
@@ -68,8 +56,7 @@ public class Flight implements Serializable
     }
 
     //This method is used to book the seats that the user selects on the UI
-    public boolean bookTemporarily(ArrayList<String> wishlist)
-    {
+    public boolean bookTemporarily(ArrayList<String> wishlist) {
         for (BookTemporarily b : tempOccupied)
             for (String s : b.getWishlist())
                 for (String s2 : wishlist)
@@ -80,18 +67,17 @@ public class Flight implements Serializable
         return true;
     }
 
-    public void removeThread(BookTemporarily bt)
-    {
+    public void removeThread(BookTemporarily bt) {
         tempOccupied.removeIf(b -> b.getWishlist().equals(bt.getWishlist()));
         System.out.println(bt.getWishlist() + "removed");
     }
-    public void removeThread(ArrayList<String> wishlist){
-        tempOccupied.removeIf(b-> b.getWishlist().equals(wishlist));
+
+    public void removeThread(ArrayList<String> wishlist) {
+        tempOccupied.removeIf(b -> b.getWishlist().equals(wishlist));
         System.out.println("removed");
     }
 
-    public ArrayList<String> getTempOccupied()
-    {
+    public ArrayList<String> getTempOccupied() {
         ArrayList<String> tmpArray = new ArrayList<>();
         for (BookTemporarily bk : tempOccupied)
             tmpArray.addAll(bk.getWishlist());
@@ -99,41 +85,16 @@ public class Flight implements Serializable
     }
 
     @Override
-    public String toString()
-    {
-
-        return "Flight: " + id + " Departure at: " + depart_time + " Available seats: " + seatsAvailable + " from: " + from + " To: " + to;
+    public String toString() {
+        return "Flight: " + id + " Departure at: " + depart_time + " Available seats: " + seatsAvailable + " from: " + from + " To: " + to + " cost: " + cost;
     }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public String getfrom()
-    {
-        return from;
-    }
-
-    public String getTo()
-    {
-        return to;
-    }
-
-    public LocalDate getDepart_date()
-    {
-        return depart_date;
-    }
-    public LocalDate getArrival_date()
-    {
-        return arrival_date;
-    }
-    public LocalTime getDepart_time()
-    {
-        return depart_time;
-    }
-    public LocalTime getArrival_time()
-    {
-        return arrival_time;
-    }
+    public String getId() {return id;}
+    public String getNumOfSeats(){return seatsAvailable+"";}
+    public String getfrom() {return from;}
+    public String getTo() {return to;}
+    public LocalDate getDepart_date() {return depart_date;}
+    public LocalDate getArrival_date() {return arrival_date;}
+    public LocalTime getDepart_time() {return depart_time;}
+    public LocalTime getArrival_time() {return arrival_time;}
+    public String getCost(){return cost+"";}
 }
