@@ -2,12 +2,19 @@ package sample;
 
 import sample.Interfaces.Operations;
 
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -121,6 +128,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations, Se
     public Boolean booknow(String flightId, String seat, Person person) {
         //the wishlist.size and person.size will always be the same so we iterate with the same f
         //this comment is so important that if u delete it the world will go boom
+
 
         String[] parts = seat.split("-");
 
@@ -257,6 +265,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations, Se
         addflight(temp17);
         addflight(temp18);
     }
+
 
 
 }
