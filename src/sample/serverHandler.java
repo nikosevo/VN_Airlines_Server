@@ -157,6 +157,11 @@ public class serverHandler extends UnicastRemoteObject implements Operations, Se
         return info;
     }
 
+    @Override
+    public void removeThread(String flightID ,ArrayList<String> wishlist) throws RemoteException {
+        flights.get(flightID).removeThread(wishlist);
+    }
+
     private String seatconvertor(String seat) {
 
         String[] parts = seat.split("-");
