@@ -1,5 +1,6 @@
 package sample;
 
+import java.awt.print.Book;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -73,8 +74,10 @@ public class Flight implements Serializable {
     }
 
     public void removeThread(ArrayList<String> wishlist) {
-        tempOccupied.removeIf(b -> b.getWishlist().equals(wishlist));
-        System.out.println("removed");
+        System.out.println("hi");
+        for(BookTemporarily bt : tempOccupied)
+            if(bt.getWishlist().equals(wishlist))
+                bt.stop();
     }
 
     public ArrayList<String> getTempOccupied() {

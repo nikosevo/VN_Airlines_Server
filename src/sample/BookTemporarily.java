@@ -10,7 +10,9 @@ public class BookTemporarily implements Runnable
     private Flight flight;
     private int time;
     private boolean over_3min;
+    private boolean forceStop = false;
     LocalTime start;
+
 
     public BookTemporarily(ArrayList<String> wishlist, Flight flight)
     {
@@ -31,11 +33,11 @@ public class BookTemporarily implements Runnable
         System.out.println("seats: " + wishlist + "booked for 10 sec");
         try
         {
-            while(!over_3min){
+            while(!over_3min && !forceStop){
                 Thread.sleep(1000);
                 LocalTime stop = LocalTime.now();
                 float diff = start.until(stop, ChronoUnit.MINUTES);
-                if(diff > 1){
+                if(diff > 3){
                     over_3min = true;
                 }
             }
@@ -47,11 +49,12 @@ public class BookTemporarily implements Runnable
         flight.removeThread(this);
 
     }
-
+    public void stop(){
+        forceStop = true;
+    }
     public ArrayList<String> getWishlist()
     {
         return wishlist;
     }
-    public void stop(){flight.removeThread(this);}
 
 }
