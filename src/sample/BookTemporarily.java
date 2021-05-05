@@ -1,5 +1,7 @@
 package sample;
 
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class BookTemporarily implements Runnable
@@ -7,15 +9,18 @@ public class BookTemporarily implements Runnable
     private ArrayList<String> wishlist;
     private Flight flight;
     private int time;
+    private boolean over_3min;
+    LocalTime start;
 
     public BookTemporarily(ArrayList<String> wishlist, Flight flight)
     {
-            this.wishlist = wishlist;
-            this.flight = flight;
-            Thread t = new Thread(this);
-            t.start();
-            time = 3;
-            System.out.println("Empty list bruh!");
+        start =  LocalTime.now();
+        this.wishlist = wishlist;
+        this.flight = flight;
+        Thread t = new Thread(this);
+        t.start();
+        time = 3;
+        System.out.println("Empty list bruh!");
 
     }
 
@@ -25,8 +30,15 @@ public class BookTemporarily implements Runnable
 
         System.out.println("seats: " + wishlist + "booked for 10 sec");
         try
-        {               //milli * seconds * minutes
-            Thread.sleep(1000 * 10 * time);
+        {
+            while(!over_3min){
+                Thread.sleep(1000);
+                LocalTime stop = LocalTime.now();
+                float diff = start.until(stop, ChronoUnit.MINUTES);
+                if(diff > 1){
+                    over_3min = true;
+                }
+            }
         } catch (InterruptedException e)
         {
             e.printStackTrace();
