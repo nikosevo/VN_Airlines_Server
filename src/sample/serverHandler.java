@@ -233,6 +233,11 @@ public class serverHandler extends UnicastRemoteObject implements Operations, Se
         Flight temp11 = new Flight("112", "Samos", "Athens", LocalTime.parse("11:15:45"), LocalDate.parse("2021-05-05"), LocalTime.parse("13:15:45"), LocalDate.parse("2021-05-05"), 50);
         Flight temp12 = new Flight("213", "Athens", "Samos", LocalTime.parse("07:15:45"), LocalDate.parse("2021-05-05"), LocalTime.parse("09:15:45"), LocalDate.parse("2021-05-05"), 60);
         Flight temp13 = new Flight("212", "Athens", "Samos", LocalTime.parse("08:15:45"), LocalDate.parse("2021-05-05"), LocalTime.parse("10:15:45"), LocalDate.parse("2021-05-05"), 90);
+        Flight temp14 = new Flight("214", "Athens", "Samos", LocalTime.parse("08:15:45"), LocalDate.parse("2021-05-05"), LocalTime.parse("10:15:45"), LocalDate.parse("2021-05-05"), 90);
+        Flight temp15 = new Flight("215", "Athens", "Samos", LocalTime.parse("08:15:45"), LocalDate.parse("2021-05-05"), LocalTime.parse("10:15:45"), LocalDate.parse("2021-05-05"), 90);
+        Flight temp16 = new Flight("216", "Athens", "Samos", LocalTime.parse("08:15:45"), LocalDate.parse("2021-05-05"), LocalTime.parse("10:15:45"), LocalDate.parse("2021-05-05"), 90);
+        Flight temp17 = new Flight("217", "Athens", "Samos", LocalTime.parse("08:15:45"), LocalDate.parse("2021-05-05"), LocalTime.parse("10:15:45"), LocalDate.parse("2021-05-05"), 90);
+        Flight temp18 = new Flight("219", "Athens", "Samos", LocalTime.parse("08:15:45"), LocalDate.parse("2021-05-05"), LocalTime.parse("10:15:45"), LocalDate.parse("2021-05-05"), 90);
         addflight(temp);
         addflight(temp1);
         addflight(temp2);
@@ -246,6 +251,11 @@ public class serverHandler extends UnicastRemoteObject implements Operations, Se
         addflight(temp11);
         addflight(temp12);
         addflight(temp13);
+        addflight(temp14);
+        addflight(temp15);
+        addflight(temp16);
+        addflight(temp17);
+        addflight(temp18);
     }
 
 
