@@ -137,6 +137,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations, Se
             int y = Integer.parseInt(parts[1]) - 1;
             flights.get(flightId).setpersonto(x, y, person); //We set the person to the flight
             person.setSeat(flightId, seat);   //We give to the person his numbered seat
+            serializeFlights();
             return true;
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
@@ -200,6 +201,7 @@ public class serverHandler extends UnicastRemoteObject implements Operations, Se
         try {
 
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("flights.dat"));
+            flights.forEach((key,value)->value.clearTempOccupied() );
             out.writeObject(flights);
             out.close();
             System.out.println("Serialized data is saved in flights.dat");

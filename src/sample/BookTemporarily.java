@@ -1,10 +1,11 @@
 package sample;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-public class BookTemporarily implements Runnable
+public class BookTemporarily implements Runnable , Serializable
 {
     private ArrayList<String> wishlist;
     private Flight flight;

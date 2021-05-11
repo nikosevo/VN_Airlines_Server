@@ -100,4 +100,8 @@ public class Flight implements Serializable {
     public LocalTime getDepart_time() {return depart_time;}
     public LocalTime getArrival_time() {return arrival_time;}
     public String getCost(){return cost+"";}
+
+    public void clearTempOccupied() {
+        tempOccupied = new ArrayList<>();
+    }
 }
